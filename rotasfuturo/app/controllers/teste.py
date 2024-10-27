@@ -4,10 +4,6 @@ from app.models.teste import Teste
 
 bp = Blueprint('teste', __name__)
 
-@bp.route('/')
-def home():
-    return render_template('index.html')
-
 @bp.route('/create', methods=['GET', 'POST'])
 def create():
     if request.method == 'POST':
@@ -21,6 +17,8 @@ def create():
         mysql.connection.commit()
         cursor.close()
         flash("Teste criado com sucesso!")
+
+        return render_template('index.html')
     else:
         flash('Inválido!', 'danger')
 
