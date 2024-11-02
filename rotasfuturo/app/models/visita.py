@@ -13,7 +13,7 @@ class Visita:
         self.conclusao: str = conclusao
 
     def criar_visita(self):
-        query = ('INSERT INTO VISITA (IDALUNO, DATA, OBJETIVO, PROFISSIONAIS, FAMILIA, ESCOLAALUNO, SERIEALUNO, RELATO,'
+        query = ('INSERT INTO VISITA (ID_ALUNO, DATA, OBJETIVO, PROFISSIONAIS, FAMILIA, ESCOLA, SERIE, RELATO,'
                  'CONCLUSAO ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)')
         values = (self.id_aluno, self.data, self.objetivo, self.profissionais, self.familia, self.escola_aluno,
                   self.serie_aluno, self.relato, self.conclusao)

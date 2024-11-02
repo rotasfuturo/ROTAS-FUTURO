@@ -24,11 +24,12 @@ class Aluno:
 
     def criar_aluno(self):
         query = (
-            'INSERT INTO ALUNO (NOME, ESCOLA, SERIE, TURMA_ESCOLA, TURNOESCOLA, DATACADASTRO, DATANASC, ENDERECO,'
-            ' TELEFONE, FILIACAO, RESPONSAVEL, BENEFICIO, ACOMPANHAMENTO, ORIENTACOES, FOTO, STATUS) VALUES '
-            '(%s, %s,%s, %s,%s, %s,%s, %s,%s, %s,%s, %s,%s, %s,%s, %s)')
+            'INSERT INTO ALUNO (NOME, ESCOLA, SERIE, TURMA_ESCOLA, TURNO_ESCOLA, DATA_CADASTRO, DATA_NASC, ENDERECO,'
+            ' TELEFONE, FILIACAO, RESPONSAVEL, BENEFICIO, ACOMPANHAMENTO, ORIENTACOES, FOTO) VALUES '
+            '(%s, %s,%s, %s,%s, %s,%s, %s,%s, %s,%s, %s,%s, %s,%s)')
         values = (self.nome, self.escola, self.serie, self.turma_escola, self.turno_escola, self.data_cadastro,
                   self.data_nasc, self.endereco, self.telefone, self.filiacao, self.responsavel, self.beneficio,
-                  self.acompanhamento, self.orientacoes, self.foto, self.status)
+                  self.acompanhamento, self.orientacoes, self.foto)
 
         return query, values
+
