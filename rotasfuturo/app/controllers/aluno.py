@@ -1,24 +1,39 @@
 import os
-from flask import Blueprint, render_template, request, flash
+from flask import Blueprint, render_template, request, flash, redirect, url_for
 from werkzeug.utils import secure_filename
 from datetime import datetime
 from dbContext import mysql, DBContext
 from app.models.aluno import Aluno
+from app.__init__ import create_app
 
 bp = Blueprint('aluno', __name__)
-
-
 
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
+@bp.route('/alunos', methods=['GET'])
+def listar_alunos():
+    filtro = request.args.get('search')
+    cursor = mysql.connection.cursor()
+    if filtro:
+        pass
+    else:
+        alunos = Aluno.listar_alunos(cursor)
+    data = cursor.fetchall()
+    cursor.close()
+
+    return render_template('lista_alunos.html', aluno=data)
+
 @bp.route('/cadastro_aluno', methods=['GET', 'POST'])
 def adicionar_aluno():
     if request.method == 'POST':
         image = request.files['foto']
         if image and allowed_file(image.filename):
+            filename = secure_filename(image.filename)
+            filepath = os.path.join(create_app().config['UPLOAD_FOLDER'], filename)
+            image.save(filepath)
 
             nome = request.form.get('nome').strip().upper()
             escola = request.form.get('escola').strip().upper()
@@ -42,10 +57,9 @@ def adicionar_aluno():
             beneficio = request.form.get('beneficio').strip().upper()
             acompanhamento = request.form.get('acompanhamento').strip()
             orientacoes = request.form.get('orientacoes').strip()
-            foto = image
-
+            image = filename
             aluno = Aluno(nome, escola, serie, turma_escola, turno_escola, data_cadastro, data_nasc, endereco, telefone,
-                          filiacao, responsavel, beneficio, acompanhamento, orientacoes, foto)
+                          filiacao, responsavel, beneficio, acompanhamento, orientacoes, image)
 
             cursor = mysql.connection.cursor()
             query, values = aluno.criar_aluno()
@@ -61,3 +75,20 @@ def adicionar_aluno():
         flash('Inválido!', 'danger')
 
     return render_template('criar_aluno.html')
+
+@bp.route('/deletar_aluno/<int:_id>', methods=['POST'])
+def deletar_aluno(_id):
+    cursor = mysql.connection.cursor()
+    cursor.execute(f'SELECT FOTO FROM ALUNO WHERE id={_id}')
+    aluno = cursor.fetchone()
+    cursor.execute(Aluno.deletar_aluno(_id))
+    mysql.connection.commit()
+    cursor.close()
+
+    if aluno and aluno[0]:
+        image_path = os.path.join(create_app().config['UPLOAD_FOLDER'], aluno[0])
+        if os.path.exists(image_path):
+            os.remove(image_path)
+    flash("Data Deleted Successfully!")
+
+    return redirect(url_for('index'))

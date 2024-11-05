@@ -20,6 +20,10 @@ class Aluno:
         self.foto: str = foto
         self.status: int = 0  # 0 siginifica que o registro está ativo
 
+    @classmethod
+    def listar_alunos(cls, cursor):
+        cursor.execute('SELECT * FROM ALUNO')
+
     def criar_aluno(self):
         query = (
             'INSERT INTO ALUNO (NOME, ESCOLA, SERIE, TURMA_ESCOLA, TURNO_ESCOLA, DATA_CADASTRO, DATA_NASC, ENDERECO,'
@@ -31,3 +35,10 @@ class Aluno:
 
         return query, values
 
+    @classmethod
+    def deletar_aluno(cls, id: int):
+        query = f'DELETE FROM student WHERE id = {id}'
+        return query
+
+    def desativar_aluno(self):
+        pass
