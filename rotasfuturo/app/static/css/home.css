@@ -1,0 +1,168 @@
+.home{
+    background-color: rgb(12, 32, 50);
+    color: rgb(255, 255, 255);
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 15px
+}
+
+header{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+    font-size: 15px;
+}
+
+#title{
+    flex-direction: column;
+    line-height: 10px;
+}
+
+li{
+    display: inline-block;
+    margin: 20px;
+    font-size: 18px;
+}
+
+b{
+    color: #00b3ff;
+}
+
+a{
+    color: white;
+    cursor: pointer;
+}
+
+a:hover{
+    color: #156588;
+    transition: 0.3s all;
+}
+
+c{
+    font-size: 25px;
+}
+
+h1{
+    font-weight: 200;
+    font-size: 45px;
+
+
+}
+
+#sair-btn{
+    border: 2px solid rgb(0, 179, 255);
+    padding: 10px;
+    border-radius: 20px;
+}
+
+#sair-btn:hover{
+    background-color: rgb(0, 179, 255);
+    color: white;
+}
+
+span{
+    color: #ffffff;
+}
+
+/*Daqui pra cima é cabeçalho*/
+
+main{
+    display: flex;
+    flex-direction: row;
+    margin-top: 90px;
+}
+.item-menu{
+    background-color: #00b3ff;
+    transition: 0.5s;
+    cursor: pointer;
+    width: 150px;
+    height: 150px;
+    margin: 40px;
+    float: left;
+    border-radius: 20px;
+    position: relative; /* Necessário para os elementos absolutos dentro da caixa */
+}
+
+.item-menu:hover{
+    opacity: .4;
+    transform: scale(0.9);
+    transform: translateY(-5px); /* Eleva a caixa */
+    background-color: #00b3ff; /* Altera a cor ao passar o mouse */
+}
+
+
+ul{
+    height: 100%;
+    list-style-type: none;
+}
+
+ul li.item-menu:hover{
+    background: rgb(0, 179, 255);
+}
+
+ul li.item-menu{
+    transition: .1s;
+}
+
+/*ul li.item-menu a{
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+    font-size: 60px;
+    padding: 20px 4%;
+    display: flex;
+    margin-left: 28px;
+    margin-bottom: 30px;
+    margin-top: 10px;
+    line-height: 90px;
+}
+*/
+
+.icones-principais ul {
+    display: flex;
+    flex-wrap: wrap; /* Quebra as caixas em múltiplas linhas */
+    justify-content: center; /* Centraliza horizontalmente */
+    gap: 20px; /* Espaçamento entre as caixas */
+    padding: 0;
+    margin: 0 auto;
+    list-style: none; /* Remove marcadores */
+    transition: transform 0.3s, background-color 0.3s;
+}
+
+.item-menu .txt-link{
+    position: absolute;
+    bottom: 10px; /* Posiciona o texto no rodapé */
+    left: 50%; /* Centraliza horizontalmente */
+    transform: translateX(-50%); /* Ajusta o ponto de referência */
+    font-size: 14px;
+    color: #ffffff;
+    font-weight: bold;
+    opacity: 0; /* Oculta inicialmente */
+    transition: bottom 0.3s, opacity 0.3s;
+}
+
+.item-menu:hover .icon > i {
+    transform: translate(-50%, -60px); /* Move o ícone para cima */
+    color: #ffffff; /* Mantém a cor ou ajusta se necessário */
+
+}
+
+/*ul li.item-menu a .icon > i{
+    font-size: 30;
+    margin-left: 10px;
+}*/
+.item-menu .icon > i {
+    position: absolute;
+    top: 50%; /* Centraliza verticalmente */
+    left: 50%; /* Centraliza horizontalmente */
+    transform: translate(-50%, -50%); /* Ajusta o ponto de referência */
+    font-size: 50px;
+    color: #ffffff; /* Cor inicial */
+    transition: transform 0.3s, color 0.3s;
+}
+
+.item-menu:hover .txt-link {
+    bottom: 20px; /* Move o texto para cima */
+    opacity: 1; /* Faz o texto aparecer */
+}

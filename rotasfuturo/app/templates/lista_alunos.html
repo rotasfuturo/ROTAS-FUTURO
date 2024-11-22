@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ROTAS PARA O FUTURO</title>
+
+    <!-- CSS Externo -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/alunos.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/fonts.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='img/icon.png') }}" type="image/x-icon">
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+    <!-- JS Externo -->
+    <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+</head>
+
+<body class="alunos">
+    <nav class="navbar navbar-expand-lg navbar-light navbar-transparent">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="{{ url_for('home.home') }}">
+          <img src="{{ url_for('static', filename='img/LOGO.png') }}" alt="Logo" width="250" height="50" class="d-inline-block align-text-top">
+        </a>
+      </div>
+    </nav>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="alert-container">
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }} mt-2">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <header>
+        <div id="title">
+            <h1>ÁREA DE ALUNOS</h1>
+        </div>
+        <ul>
+            <li><a href="{{ url_for('home.home') }}">Voltar</a></li>
+        </ul>
+    </header>
+
+    <main>
+        <h2>Alunos Cadastrados</h2>
+        <form method="GET" action="{{ url_for('aluno.listar_alunos') }}" class="mb-4" id="pesquisar">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Pesquisar alunos..." name="pesquisa"
+                    value="{{ request.args.get('pesquisar', '') }}">
+                <button class="btn btn-outline-secondary" type="submit">Pesquisar</button>
+            </div>
+        </form>
+
+        <div class="buttons">
+            <!-- Botão Cadastro -->
+            <input type="checkbox" id="modal-toggle" hidden>
+            <div class="modal">
+                <div class="modal-content">
+                    <label for="modal-toggle" class="close">&times;</label>
+                    <h2>Cadastro de Aluno</h2>
+                    <form class="cadastro" method="POST" enctype="multipart/form-data">
+                        <label for="foto" class="form-label">Foto do Aluno</label>
+                        <input type="file" class="form-control" id="foto" name="foto">
+                        <p>Tamanho do arquivo deve ser menor que <span>2MB</span></p><br><br>
+
+                        <label for="escola" class="form-label">Escola</label>
+                        <input type="text" class="form-control" id="escola" name="escola" required><br><br>
+
+                        <label for="data_cadastro" class="form-label">Data</label>
+                        <input type="date" class="form-control" id="data_cadastro" name="data_cadastro"
+                            required><br><br>
+
+                        <label for="nome" class="form-label">Aluno(a)</label>
+                        <input type="text" class="form-control" id="nome" name="nome" required><br><br>
+
+                        <label for="serie" class="form-label">Ano/Série</label>
+                        <input type="text" class="form-control" id="serie" name="serie" required><br><br>
+
+                        <label for="turma" class="form-label">Turma</label>
+                        <input type="text" class="form-control" id="turma" name="turma" required><br><br>
+
+                        <label for="turno" class="form-label">Turno</label>
+                        <input type="text" class="form-control" id="turno" name="turno" required><br><br>
+
+                        <label for="data_nasc" class="form-label">Data de Nascimento</label>
+                        <input type="date" class="form-control" id="data_nasc" name="data_nasc" required><br><br>
+
+                        <label for="endereco" class="form-label">Endereço residencial</label>
+                        <input type="text" class="form-control" id="endereco" name="endereco" required><br><br>
+
+                        <label for="telefone" class="form-label">Telefone</label>
+                        <input type="tel" class="form-control" id="telefone" name="telefone" required><br><br>
+
+                        <label for="filiacao" class="form-label">Filiação</label>
+                        <input type="text" class="form-control" id="filiacao" name="filiacao" required><br><br>
+
+                        <label for="responsavel" class="form-label">Nome do responsável legal</label>
+                        <input type="text" class="form-control" id="responsavel" name="responsavel" required><br><br>
+
+                        <label for="beneficio" class="form-label">Possui algum benefício?</label>
+                        <input type="text" class="form-control" id="beneficio" name="beneficio"><br><br>
+
+                        <label for="acompanhamento" class="form-label">Família acompanhada pelo serviço social?</label>
+                        <input type="text" class="form-control" id="acompanhamento" name="acompanhamento"><br><br>
+
+                        <label for="orientacoes" class="form-label">Orientações e acordos firmados</label>
+                        <input type="text" class="form-control" id="orientacoes" name="orientacoes"><br><br>
+
+                        <div class="form-buttons">
+                            <button class="cancel-button" type="submit">Cadastrar</button>
+                            <label for="modal-toggle" class="cancel-button">Cancelar</label>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <label for="modal-toggle" class="modal-button">Cadastrar Aluno</label>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <div class="col md-12">
+                    {% if aluno %}
+                    <table class="table table-hover" id="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Foto</th>
+                                <th scope="col">Nº</th>
+                                <th scope="col">Nome</th>
+                                <th scope="col">Ações</th>
+                            </tr>
+                        </thead>
+                        {% for row in aluno %}
+                        <tbody>
+                            <tr>
+                                <td>
+                                    {% if row.15 != 'none' %}
+                                    <img src="{{ url_for('static', filename='uploads/' + row.15) }}"
+                                        class="img-thumbnail" alt="Foto do Aluno"
+                                        style="width:8vw; height:8vw; object-fit:cover; border-radius:0;">
+                                    {% else %}
+                                    <img src="{{ url_for('static', filename='img/default.jpg') }}" class="img-thumbnail"
+                                        alt="Foto do Aluno"
+                                        style="width:8vw; height:8vw; object-fit:cover; border-radius:0;">
+                                    {% endif %}
+                                </td>
+                                <th scope="row">{{ row.0 }}</th>
+                                <td>{{ row.1 }}</td>
+                                <td>
+                                    <a href="{{ url_for('aluno.pagina_aluno', _nome=row.1, _id=row.0) }}"
+                                        class="btn btn-success btn-sm">Abrir</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                        {% endfor %}
+                        {% else %}
+                        <p>Nenhum aluno cadastrado.</p>
+                        {% endif %}
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+
+</html>

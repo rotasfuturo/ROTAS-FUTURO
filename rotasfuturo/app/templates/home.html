@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ROTAS PARA O FUTURO</title>
+
+    <!-- CSS Externo -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='img/icon.png') }}" type="image/x-icon">
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+    <!-- JS Externo -->
+    <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+</head>
+
+<body class="home">
+    <nav class="navbar navbar-expand-lg navbar-light navbar-transparent">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="{{ url_for('home.home') }}">
+          <img src="{{ url_for('static', filename='img/LOGO.png') }}" alt="Logo" width="250" height="50" class="d-inline-block align-text-top">
+        </a>
+      </div>
+    </nav>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="alert-container">
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }} mt-2">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <header>
+        <div id="title">
+            <h1><b>Seja Bem-Vindo</b></h1>
+        </div>
+    </header>
+
+    <nav class="icones-principais">
+        <ul>
+            <li class="item-menu">
+                <a class="nav-link text-center" href="{{ url_for('atividade.listar_atividades') }}">
+                    <span class="icon"><i class="bi bi-calendar"></i></span>
+                    <span class="txt-link">Atividades</span>
+                </a>
+            </li>
+            <li class="item-menu">
+                <a href="{{ url_for('aluno.listar_alunos') }}">
+                    <span class="icon"><i class="bi bi-person-vcard"></i></span>
+                    <span class="txt-link">Alunos</span>
+                </a>
+            </li>
+            <li class="item-menu">
+                <a href="{{ url_for('matricula.listar_matriculas') }}">
+                    <span class="icon"><i class="bi bi-bookmark-check-fill"></i></span>
+                    <span class="txt-link">Matrículas</span>
+                </a>
+            </li>
+            <li class="item-menu">
+                <a href="{{ url_for('turma.listar_turmas') }}">
+                    <span class="icon"><i class="bi bi-people"></i></span>
+                    <span class="txt-link">Turmas</span>
+                </a>
+            </li>
+            <li class="item-menu">
+                <a href="{{ url_for('professor.listar_professores') }}">
+                    <span class="icon"><i class="bi bi-person-workspace"></i> </span>
+                    <span class="txt-link">Professores</span>
+                </a>
+            </li>
+            <li class="item-menu">
+                <a href="{{ url_for('visita.listar_visitas') }}">
+                    <span class="icon"><i class="bi bi-taxi-front-fill"></i></span>
+                    <span class="txt-link">Visitas</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</body>
+
+</html>

@@ -6,4 +6,5 @@ class Teste:
     def create(self):
         query = 'INSERT INTO person (NAME, AGE) VALUES (%s, %s)'
         values = (self.nome, self.idade)
+
         return query, values

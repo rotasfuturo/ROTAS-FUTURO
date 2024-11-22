@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ROTAS PARA O FUTURO</title>
+
+    <!-- CSS Externo -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/alunos.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='img/icon.png') }}" type="image/x-icon">
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+    <!-- JS Externo -->
+    <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+</head>
+
+<body class="alunos">
+    <nav class="navbar navbar-expand-lg navbar-light navbar-transparent">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="{{ url_for('home.home') }}">
+          <img src="{{ url_for('static', filename='img/LOGO.png') }}" alt="Logo" width="250" height="50" class="d-inline-block align-text-top">
+        </a>
+      </div>
+    </nav>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    <div class="alert-container">
+        {% for category, message in messages %}
+        <div class="alert alert-{{ category }} mt-2">
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+    {% endwith %}
+
+    <header>
+        <div id="title">
+            <h1>ÁREA DO ALUNO</h1>
+        </div>
+        <ul>
+            <li><a href="{{ url_for('aluno.listar_alunos') }}">Voltar</a></li>
+        </ul>
+    </header>
+
+    <main>
+        <div class="row">
+            <div class="col-sm-4" style="margin-top: 50px;">
+                <div class="text-center">
+                    {% if aluno.foto != 'none' and aluno.status == 0 %}
+                    <img class="avatar" src="{{ url_for('static', filename='uploads/' + aluno.foto) }}"
+                        alt="Foto do Aluno">
+                    {% elif aluno.foto != 'none' and aluno.status == 1 %}
+                        <img class="avatar_desativado" src="{{ url_for('static', filename='uploads/' + aluno.foto) }}"
+                        alt="Foto do Aluno">
+                    {% else %}
+                    <img class="avatar" src="{{ url_for('static', filename='img/default.jpg') }}" alt="Foto do Aluno">
+                    {% endif %}
+                </div>
+                </hr><br>
+            </div>
+            <div class="col-sm-8" style="margin-top: 50px;">
+                <ul class="nav nav-tabs">
+                    <li class="active">Dados</li>
+
+                    <div class="buttons">
+                        <input type="checkbox" id="modal-toggle" hidden>
+                        <div class="modal">
+                            <div class="modal-content">
+                                <label for="modal-toggle" class="close">&times;</label>
+                                <h2>Editar Aluno</h2>
+                                <form method="POST" enctype="multipart/form-data"
+                                    action="{{ url_for('aluno.atualizar_aluno', _id=aluno.id, _nome=aluno.nome) }}">
+                                    <label for="foto" class="form-label">Foto do Aluno</label>
+                                    <input type="file" class="form-control" id="foto" name="foto"
+                                        value="{{ aluno.foto }}">
+                                    <p>Tamanho do arquivo deve ser menor que <span>2MB</span></p><br><br>
+
+                                    <label for="escola" class="form-label">Escola</label>
+                                    <input type="text" class="form-control" id="escola" name="escola"
+                                        value="{{ aluno.escola }}" required><br><br>
+
+                                    <label for="data_cadastro" class="form-label">Data</label>
+                                    <input type="date" class="form-control" id="data_cadastro" name="data_cadastro"
+                                        value="{{ aluno.data_cadastro }}" required><br><br>
+
+                                    <label for="nome" class="form-label">Aluno(a)</label>
+                                    <input type="text" class="form-control" id="nome" name="nome"
+                                        value="{{ aluno.nome }}" required><br><br>
+
+                                    <label for="serie" class="form-label">Ano/Série</label>
+                                    <input type="text" class="form-control" id="serie" name="serie"
+                                        value="{{ aluno.serie }}" required><br><br>
+
+                                    <label for="turma" class="form-label">Turma</label>
+                                    <input type="text" class="form-control" id="turma" name="turma"
+                                        value="{{ aluno.turma_escola }}" required><br><br>
+
+                                    <label for="turno" class="form-label">Turno</label>
+                                    <input type="text" class="form-control" id="turno" name="turno"
+                                        value="{{ aluno.turno_escola }}" required><br><br>
+
+                                    <label for="data_nasc" class="form-label">Data de Nascimento</label>
+                                    <input type="date" class="form-control" id="data_nasc" name="data_nasc"
+                                        value="{{ aluno.data_nasc }}" required><br><br>
+
+                                    <label for="endereco" class="form-label">Endereço residencial</label>
+                                    <input type="text" class="form-control" id="endereco" name="endereco"
+                                        value="{{ aluno.endereco }}" required><br><br>
+
+                                    <label for="telefone" class="form-label">Telefone</label>
+                                    <input type="tel" class="form-control" id="telefone" name="telefone"
+                                        value="{{ aluno.telefone }}" required><br><br>
+
+                                    <label for="filiacao" class="form-label">Filiação</label>
+                                    <input type="text" class="form-control" id="filiacao" name="filiacao"
+                                        value="{{ aluno.filiacao }}" required><br><br>
+
+                                    <label for="responsavel" class="form-label">Nome do responsável legal</label>
+                                    <input type="text" class="form-control" id="responsavel" name="responsavel"
+                                        value="{{ aluno.responsavel }}" required><br><br>
+
+                                    <label for="beneficio" class="form-label">Possui algum benefício?</label>
+                                    <input type="text" class="form-control" id="beneficio" name="beneficio"
+                                        value="{{ aluno.beneficio }}"><br><br>
+
+                                    <label for="acompanhamento" class="form-label">Família acompanhada pelo serviço
+                                        social?</label>
+                                    <input type="text" class="form-control" id="acompanhamento" name="acompanhamento"
+                                        value="{{ aluno.acompanhamento }}"><br><br>
+
+                                    <label for="orientacoes" class="form-label">Orientações e acordos firmados</label>
+                                    <input type="text" class="form-control" id="orientacoes" name="orientacoes"
+                                        value="{{ aluno.orientacoes }}"><br><br>
+
+                                    <div class="form-buttons">
+                                        <button class="btn btn-primary" type="submit">Salvar</button>
+                                        <label for="modal-toggle" class="cancel-button">Cancelar</label>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <label for="modal-toggle" class="btn btn-warning btn-sm">Editar Aluno</label>
+                        <form method="POST" action="{{ url_for('aluno.deletar_aluno', _id=aluno.id) }}"
+                            style="display:inline;">
+                            <button type="submit" class="btn btn-danger btn-sm"
+                                onclick="return confirm('Deseja deletar esse aluno?')">Deletar</button>
+                        </form>
+                        {% if aluno.status == 0 %}
+                        <form method="POST" action="{{ url_for('aluno.desativar_aluno', _id=aluno.id) }}"
+                            style="display:inline;">
+                            <button type="submit" class="btn btn-danger btn-sm"
+                                onclick="return confirm('Deseja desativar esse aluno?')">Desativar</button>
+                        </form>
+                        {% else %}
+                        <form method="POST" action="{{ url_for('aluno.ativar_aluno', _id=aluno.id) }}"
+                            style="display:inline;">
+                            <button type="submit" class="btn btn-success btn-sm"
+                                onclick="return confirm('Deseja ativar esse aluno?')">Ativar</button>
+                        </form>
+                        {% endif %}
+                    </div>
+                </ul>
+
+                <div class="tab-content">
+                    <div class="tab-pane active" id="home">
+                        <hr>
+                        <div class="col-xs-6">
+                            <h4>ID: {{ aluno.id }}</h4>
+                        </div>
+                        <br>
+                        <div class="col-xs-6">
+                            <h4>Nome: {{ aluno.nome }}</h4>
+                        </div>
+                        <br>
+                        <div class="col-xs-6">
+                            <h4>Escola: {{ aluno.escola }}</h4>
+                        </div>
+                        <br>
+                        <div class="col-xs-6">
+                            <h4>Ano/Série: {{ aluno.serie }}</h4>
+                        </div>
+                        <br>
+                        <div class="col-xs-6">
+                            <h4>Turma: {{ aluno.turma_escola }}</h4>
+                        </div>
+                        <br>
+                        <div class="col-xs-6">
+                            <h4>Turno: {{ aluno.turno_escola }}</h4>
+                        </div>
+                        <br>
+                        <div class="col-xs-6">
+                            <h4>Data de nascimento: {{ aluno.data_nasc.strftime('%d/%m/%Y') }}</h4>
+                        </div>
+                        <br>
+                        <div class="col-xs-6">
+                            <h4>Responsável legal: {{ aluno.responsavel }}</h4>
+                        </div>
+                        <br>
+                        <div class="col-xs-6">
+                            <h4>Endereço: {{ aluno.endereco }}</h4>
+                        </div>
+                        <br>
+                        <div class="col-xs-6">
+                            <h4>Data de cadastro: {{ aluno.data_cadastro.strftime('%d/%m/%Y') }}</h4>
+                        </div>
+                        <br>
+                        <div class="col-xs-6">
+                            <h4>Telefone: {{ aluno.telefone }}</h4>
+                        </div>
+                        <br>
+                        <div class="col-xs-6">
+                            <h4>Filiação: {{ aluno.filiacao }}</h4>
+                        </div>
+                        <br>
+                        <div class="col-xs-6">
+                            <h4>Possui algum benefício?: {{ aluno.beneficio }}</h4>
+                        </div>
+                        <br>
+                        <div class="col-xs-6">
+                            <h4>Família acompanhada pelo serviço social?: {{ aluno.acompanhamento }}</h4>
+                        </div>
+                        <br>
+                        <div class="col-xs-6">
+                            <h4>Orientações e acordos firmados: {{ aluno.orientacoes }}</h4>
+                        </div>
+                        <br>
+                        <hr>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+
+</html>

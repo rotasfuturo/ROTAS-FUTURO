@@ -9,5 +9,5 @@ class DBContext:
     MYSQL_USER = 'root'
     MYSQL_PASSWORD = 'Rot@sfuturo2024'
     MYSQL_DB = 'rotasfuturo'
-    UPLOAD_FOLDER = os.path.join(os.getcwd(), 'static/uploads')
+    UPLOAD_FOLDER = os.path.join(os.getcwd(), 'app/static/uploads')
     MAX_CONTENT_LENGTH = 16 * 1024 * 1024
