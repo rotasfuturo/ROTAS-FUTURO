@@ -7,13 +7,13 @@ class Turma:
         self.quantidade_max_alunos : int = quantidade_max_alunos
 
     @classmethod
-    def adicionar_aluno_turma(self, id, cursor):
+    def adicionar_aluno_turma(cls, id, cursor):
         query = f'UPDATE TURMA SET QUANTIDADE_ALUNOS = QUANTIDADE_ALUNOS + 1 WHERE ID_TURMA = {id}'
 
         cursor.execute(query)
 
     @classmethod
-    def deletar_aluno_turma(self, id, cursor):
+    def deletar_aluno_turma(cls, id, cursor):
         query = f'UPDATE TURMA SET QUANTIDADE_ALUNOS = QUANTIDADE_ALUNOS - 1 WHERE ID_TURMA = {id}'
 
         cursor.execute(query)

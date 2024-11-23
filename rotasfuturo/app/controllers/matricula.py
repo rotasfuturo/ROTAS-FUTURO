@@ -139,7 +139,7 @@ def adicionar_matricula():
 @bp.route('/deletar_matricula/<int:_id>', methods=['POST'])
 def deletar_matricula(_id):
     cursor = mysql.connection.cursor()
-    cursor.execute(Matricula.deletar_matricula(_id))
+
     query = (f'SELECT TURMA.ID_TURMA FROM TURMA '
              f'INNER JOIN MATRICULA ON TURMA.ID_TURMA = MATRICULA.ID_TURMA '
              f'WHERE MATRICULA.ID_MATRICULA = {_id}')
@@ -150,7 +150,9 @@ def deletar_matricula(_id):
         flash("Erro: Matrícula não encontrada ou já foi deletada.", "danger")
         return redirect(url_for('matricula.listar_matriculas'))
 
+    id_turma = id_turma[0]
     Turma.deletar_aluno_turma(id_turma, cursor)
+    cursor.execute(Matricula.deletar_matricula(_id))
     mysql.connection.commit()
     cursor.close()
     flash("Matrícula deletada com sucesso", "success")
@@ -162,7 +164,6 @@ def desativar_matricula(_id):
     cursor = mysql.connection.cursor()
     matricula = Matricula.selecionar_matricula(_id, cursor)
     if matricula.status == 0:
-        cursor.execute(Matricula.desativar_matricula(_id))
         query = (f'SELECT TURMA.ID_TURMA FROM TURMA '
                  f'INNER JOIN MATRICULA ON TURMA.ID_TURMA = MATRICULA.ID_TURMA '
                  f'WHERE MATRICULA.ID_MATRICULA = {_id}')
@@ -173,7 +174,9 @@ def desativar_matricula(_id):
             flash("Erro: Matrícula não encontrada ou já foi deletada.", "danger")
             return redirect(url_for('matricula.listar_matriculas'))
 
+        id_turma = id_turma[0]
         Turma.deletar_aluno_turma(id_turma, cursor)
+        cursor.execute(Matricula.desativar_matricula(_id))
         mysql.connection.commit()
         cursor.close()
         flash("Matrícula desativada com sucesso", "success")

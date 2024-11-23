@@ -304,3 +304,8 @@ img.avatar_desativado  {
 	border-radius: 50%;
 	width: 250px;
 }
+
+.modal-content form label, .modal-content form input {
+    width: 100%;
+    margin-bottom: 0;
+}
